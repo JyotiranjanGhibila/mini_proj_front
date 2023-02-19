@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="parent">
+      
+    </div>
+  </body>
+</html>
+<script>
+  const getData = () => {
+    fetch("https://muddy-colt-sun-hat.cyclic.app/notes/", {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res.notes);
+        renderDOM(res.notes)
+      })
+      .catch((err) => console.log(err));
+  };
+  getData();
+
+  let container = document.getElementById("parent")
+
+  function renderDOM(data){
+     data.forEach((el)=>{
+      let div=document.createElement("div")
+       
+      let title=document.createElement("p")
+      title.innerText=el.title
+
+      let body=document.createElement("p")
+       body.innerText=el.note
+
+      let category=document.createElement("p")
+      category.innerText=el.category
+
+
+
+      div.append(title,body,category)
+      container.append(div)
+     })
+  }
+</script>
